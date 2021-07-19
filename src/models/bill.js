@@ -14,8 +14,3 @@ const BillSchema = Schema({
 })
 
 module.exports = mongoose.model('Bill', BillSchema)
-
-// {
-//   "id": 1,
-//   "date": 1626648966887
-// }

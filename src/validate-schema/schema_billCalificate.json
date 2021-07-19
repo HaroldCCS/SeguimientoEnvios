@@ -1,0 +1,12 @@
+{
+    "type": "object",
+    "properties": {
+        "data": {
+            "type": "array"
+        }
+    },
+    "additionalProperties": true,
+    "required": [
+        "data"
+    ]
+}

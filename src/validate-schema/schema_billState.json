@@ -1,0 +1,22 @@
+{
+    "type": "object",
+    "properties": {
+        "state": {
+            "type": "integer",
+            "maxLength": 1,
+            "enum": [
+                2,
+                3,
+                4
+            ]
+        },
+        "operatorId": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": true,
+    "required": [
+        "state",
+        "operatorId"
+    ]
+}

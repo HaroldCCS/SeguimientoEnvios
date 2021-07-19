@@ -1,0 +1,45 @@
+{
+    "type": "object",
+    "properties": {
+        "nit": {
+            "type": "integer",
+            "pattern": "^[0-9_]*$",
+            "maxLength": 255
+        },
+        "email": {
+            "type": "string",
+            "maxLength": 255
+        },
+        "name": {
+            "type": "string",
+            "maxLength": 255,
+            "pattern": "^[a-zA-Z_ ]*$"
+        },
+        "phone": {
+            "type": "string",
+            "maxLength": 255,
+            "pattern": "^[0-9_]*$"
+        },
+        "typeAccess": {
+            "type": "integer",
+            "maxLength": 1,
+            "enum": [
+                1,
+                2
+            ]
+        },
+        "password": {
+            "type": "string",
+            "maxLength": 255
+        }
+    },
+    "additionalProperties": true,
+    "required": [
+        "nit",
+        "email",
+        "name",
+        "phone",
+        "typeAccess",
+        "password"
+    ]
+}

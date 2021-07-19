@@ -4,10 +4,19 @@
 import Product from '../models/product'
 import response from '../util/response'
 import Crud from '../util/Crud'
+import { processValidationBodyJsonSchema } from '../validate-schema';
 
 export default class ProductController {
 
   static save(req, res) {
+
+    let dataValidation = processValidationBodyJsonSchema(req.body, "schema_productRegister")
+    if (dataValidation.status){
+        console.error(dataValidation.messageError);
+        return response(500, dataValidation.response.code, dataValidation.response.message, dataValidation.response.type, {}, res);
+    }
+
+
     let product = new Product();
     product.name = req.body.name;
     product.brand = req.body.brand;
@@ -30,7 +39,7 @@ export default class ProductController {
       if (err) return response(500, "R002", "Error to get product", "error", {}, res);
       if (!product) return response(404, "R003", "Product not found", "success", {}, res);
 
-      return response(200,"R001", "get product", "success", {product: product}, res);
+      return response(200,"R001", "Get product", "success", {product: product}, res);
     });
   }
 
@@ -47,6 +56,13 @@ export default class ProductController {
   }
 
   static update(req, res) {
+
+    let dataValidation = processValidationBodyJsonSchema(req.body, "schema_productUpdate")
+    if (dataValidation.status){
+        console.error(dataValidation.messageError);
+        return response(500, dataValidation.response.code, dataValidation.response.message, dataValidation.response.type, {}, res);
+    }
+
     let productId = req.params.productId;
     let update = req.body;
 
@@ -54,7 +70,7 @@ export default class ProductController {
       if (err) return response(500, "R002", "Error to update product", "error", {}, res);
       if (!productUpdated) return response(404, "R003", "Product not found", "success", {}, res);
 
-      return response(200, "R001", "product modfify", "success", {product: productUpdated}, res);
+      return response(200, "R001", "Product modfify", "success", {}, res);
     });
   }
 

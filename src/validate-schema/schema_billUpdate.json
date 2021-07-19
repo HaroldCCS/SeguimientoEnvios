@@ -1,0 +1,33 @@
+{
+    "type": "object",
+    "properties": {
+        "idClient": {
+            "type": "string",
+            "maxLength": 255
+        },
+        "product": {
+            "type": "array"
+        },
+        "direction": {
+            "type": "string",
+            "maxLength": 255
+        },
+        "city": {
+            "type": "string",
+            "maxLength": 255
+        },
+        "phone": {
+            "type": "string",
+            "maxLength": 255
+        },
+        "priceAll": {
+            "type": "integer",
+            "maxLength": 255
+        },
+        "state": {
+            "type": "array"
+        }
+    },
+    "additionalProperties": true,
+    "required": []
+}

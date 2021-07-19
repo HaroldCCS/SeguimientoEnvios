@@ -10,10 +10,11 @@ const api = express.Router()
 
 //products
 api.get('/product', Product.getAll)
+api.get('/product/statistics', Auth.admin, Product.getAll)
 api.get('/product/:productId', Product.getOne)
-api.post('/product', Auth.staff,Product.save)
-api.put('/product/:productId', Auth.staff,Product.update )
-api.delete('/product/:productId', Auth.staff,Product.delete)
+api.post('/product/create', Auth.staff,Product.save)
+api.put('/product/update/:productId', Auth.staff,Product.update )
+api.delete('/product/delete/:productId', Auth.staff,Product.delete)
 
 //staff
 api.post('/user/register', Auth.admin, User.register)
@@ -23,14 +24,15 @@ api.post('/user/signin', User.signIn)
 api.post('/client/signup', Client.register)
 api.post('/client/signin', Client.signIn)
 api.get('/client/statistics', Auth.admin, Client.statistics)
+api.get('/client', Auth.staff, Client.getAll)
 
 //bills
 api.get('/bill', Auth.client, Bill.getAll)
 api.get('/bill/:billId', Auth.client, Bill.getOne)
 api.post('/bill', Auth.client ,Bill.save)
-api.put('/bill/:billId', Auth.client, Bill.update)
+api.put('/bill:billId', Auth.admin, Bill.update)
 api.put('/bill/state/:billId', Auth.staff, Bill.state)
-api.put('/bill/calificate/:billId', Auth.client, Auth,Bill.update)
+api.put('/bill/calificate/:billId', Auth.client, Bill.calificate)
 
 
 api.get('/private', Auth, function (req, res) {

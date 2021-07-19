@@ -1,0 +1,45 @@
+{
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "maxLength": 255
+        },
+        "brand": {
+            "type": "string",
+            "maxLength": 255
+        },
+        "price": {
+            "type": "integer",
+            "maxLength": 255
+        },
+        "description": {
+            "type": "string",
+            "maxLength": 255
+        },
+        "stock": {
+            "type": "integer",
+            "maxLength": 255
+        },
+        "sell": {
+            "type": "integer",
+            "maxLength": 255
+        },
+        "state": {
+            "type": "boolean",
+            "maxLength": 1,
+            "enum": [
+                true,
+                false
+            ]
+        }
+    },
+    "additionalProperties": true,
+    "required": [
+        "name",
+        "brand",
+        "price",
+        "description",
+        "stock"
+    ]
+}
