@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.0.1
 info:
   title: TestEnMedio.1.0
   version: 1.0.0
@@ -69,6 +69,7 @@ paths:
       tags:
         - User endpoints
     parameters: []
+
   /client/signup:
     post:
       summary: Register client
@@ -95,8 +96,6 @@ paths:
                   type: string
                 phone:
                   type: string
-                typeAccess:
-                  type: integer
                 password:
                   type: string
         description: ''
@@ -201,8 +200,6 @@ paths:
                     type: object
       operationId: get-users-userId
       description: Gets User Information
-  
-  /product/create:
     post:
       summary: Create product
       operationId: post-Create
@@ -228,40 +225,11 @@ paths:
                   type: integer
                 description:
                   type: string
-                typeAccess:
-                  type: integer
                 stock:
                   type: string
         description: ''
       tags:
         - Product endpoints
-  /product/delete/{productId}:
-      parameters:
-      - in: path
-        name: productId
-        schema:
-          type: string
-          required: true
-    delete:
-      summary: Update product
-      operationId: put-product
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/user.validate.apiResponse'
-      description: Validate Identification existence
-      tags:
-        - Product endpoints
-  /product/update/{productId}:
-    parameters:
-      - in: path
-        name: productId
-        schema:
-          type: string
-          required: true
     put:
       summary: Update product
       operationId: put-product
@@ -287,8 +255,6 @@ paths:
                   type: integer
                 description:
                   type: string
-                typeAccess:
-                  type: integer
                 stock:
                   type: string
                 sell:
@@ -298,7 +264,153 @@ paths:
         description: ''
       tags:
         - Product endpoints
+      parameters: []
+    delete:
+      summary: Update product
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user.validate.apiResponse'
+      description: Validate Identification existence
+      tags:
+        - Product endpoints
+   
+  
+  '/bill':
+    get:
+      summary: Get all products
+      tags:
+        - Bill endpoints
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                example-1:
+                  value:
+                    code: string
+                    message: string
+                    type: string
+                    data: object
+      description: Gets Bill Information
+    post:
+      summary: Register client
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user.validate.apiResponse'
+      description: Validate Identification existence
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idClient:
+                  type: string
+                product:
+                  type: string
+        description: ''
+      tags:
+        - Bill endpoints
     parameters: []
+  '/bill/{billId}':
+    parameters:
+    - schema:
+        type: string
+      name: billId
+      in: path
+      required: true
+    get:
+      summary: Get Bill
+      tags:
+        - Bill endpoints
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                example-1:
+                  value:
+                    code: string
+                    message: string
+                    type: string
+                    data: object
+      description: Gets Bill Information
+    put:
+      summary: Update Bill
+      tags:
+        - Bill endpoints
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                example-1:
+                  value:
+                    code: string
+                    message: string
+                    type: string
+                    data: object
+      description: Gets Bill Information
+  '/bill/state/{billId}':
+    parameters:
+    - schema:
+        type: string
+      name: billId
+      in: path
+      required: true
+    put:
+      summary: Update Bill state Information
+      tags:
+        - Bill endpoints
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                example-1:
+                  value:
+                    code: string
+                    message: string
+                    type: string
+                    data: object
+      description: Update Bill state Information
+  '/bill/calificate/{billId}':
+    parameters:
+    - schema:
+        type: string
+      name: billId
+      in: path
+      required: true
+    put:
+      summary:  Update Bill calificate Information
+      tags:
+        - Bill endpoints
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                example-1:
+                  value:
+                    code: string
+                    message: string
+                    type: string
+                    data: object
+      description: Update Bill calificate Information
+
 components:
   schemas:
     user.validate.apiResponse:
