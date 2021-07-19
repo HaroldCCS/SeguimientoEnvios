@@ -36,6 +36,22 @@ export default class UserController{
   }
 
   /**
+	 * Funcion que permite obtener Todos los usuarios (solo para admin)
+	 * @param {object} req
+	 * @param {object} res
+	*/
+  static async getAll(req, res) {
+
+    try {
+      let value = await Promise.resolve(Crud.findAll(User));
+      return response(200, "R001", "Get staff", "success", value, res);
+    } catch (error) {
+      if(error == 500) return response(500, "R002", "Internal Service Error", "error", {}, res);
+      if(error == 400) return response(400, "R003", "staff not found", "success", {}, res);
+    }
+  }
+
+  /**
 	 * Funcion que permite ingresar sesion
 	 * @param {object} req
 	 * @param {object} res

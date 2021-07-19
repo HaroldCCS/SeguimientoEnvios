@@ -12,13 +12,14 @@ const api = express.Router()
 api.get('/product', Product.getAll)
 api.get('/product/statistics', Auth.admin, Product.statistics)
 api.get('/product/:productId', Product.getOne)
-api.post('/product/create', Auth.staff,Product.save)
-api.put('/product/update/:productId', Auth.staff,Product.update )
-api.delete('/product/delete/:productId', Auth.staff,Product.delete)
+api.post('/product', Auth.staff,Product.save)
+api.put('/product/:productId', Auth.staff,Product.update )
+api.delete('/product/:productId', Auth.staff,Product.delete)
 
 //staff
 api.post('/user/register', Auth.admin, User.register)
 api.post('/user/signin', User.signIn)
+api.get('/user', Auth.admin, User.getAll)
 
 //clients
 api.post('/client/signup', Client.register)
