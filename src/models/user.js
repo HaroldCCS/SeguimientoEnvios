@@ -10,7 +10,7 @@ const UserSchema = Schema({
   email: {type: String, unique: true, lowercase: true},
   name: String,
   phone: {type: String, unique: true, size: 15},
-  typeAccess: Boolean,
+  typeAccess: {type: Number},
   password: {type: String, select: false},
   signupDate: {type: Date, default: Date.now()},
   lastLogin: Date

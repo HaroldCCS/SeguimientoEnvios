@@ -5,12 +5,17 @@ const Schema = mongoose.Schema
 
 const BillSchema = Schema({
   idClient: {type: String},
-  product: {type: Object},
+  product: {type: Array},
   direction: {type: String},
   city: {type: String},
-  phone: {type: String, unique: true, size: 15},
+  phone: {type: String, size: 15},
   priceAll: {type: Number},
-  state: {type: Number, default: 1}
+  state: {type: Array}
 })
 
 module.exports = mongoose.model('Bill', BillSchema)
+
+// {
+//   "id": 1,
+//   "date": 1626648966887
+// }

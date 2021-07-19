@@ -15,7 +15,7 @@ export default class Services{
     return jwt.encode(payload, config.SECRET_TOKEN)
   }
 
-  static decodeToken(token) {
+  static decodeToken(token, status) {
     return new Promise((resolve,reject)=> {
       try {
         const payload = jwt.decode(token, config.SECRET_TOKEN)
@@ -25,6 +25,39 @@ export default class Services{
             message: 'El token ha expirado'
           })
         }
+        if (typeof payload.typeAccess != "number") {
+          reject({
+            status: 400,
+            message: 'Denied Access'
+          })
+        }
+        switch (status) {
+          case 1:
+            if (payload.typeAccess != 1) {
+              reject({
+                status: 400,
+                message: 'Denied Access'
+              })
+            }
+            break;
+          case 2:
+            if (payload.typeAccess != 1 && payload.typeAccess != 2) {
+              reject({
+                status: 400,
+                message: 'Denied Access'
+              })
+            }
+            break;
+          case 3:
+            if (payload.typeAccess < 1 || payload.typeAccess > 3) {
+              reject({
+                status: 400,
+                message: 'Denied Access'
+              })
+            }
+            break;
+        }
+
         resolve(payload.sub)
       } catch (err) {
         reject({

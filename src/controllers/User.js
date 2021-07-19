@@ -1,45 +1,39 @@
 "use strict";
 
 import User from "../models/user";
-import services from '../services';
-
+import response from '../util/response'
+import Crud from '../util/Crud'
 
 export default class UserController{
+
+  /**
+	 * Funcion que permite Registrar un usuario Staff
+	 * @param {object} req
+	 * @param {object} res
+	*/
   static register(req, res){
     const user = new User({
       nit: req.body.nit,
       email: req.body.email,
       name: req.body.name,
+      typeAccess: req.body.typeAccess,
       phone: req.body.phone,
       password: req.body.password
     })
 
-
     user.save(err => {
-      if (err) return res.status(500).send({ msg: `Error al crear usuario: ${err}` })
-      return res.status(200).send({ message: "User create successful" })
+      if (err) response(500, "R002", "Error to create user", "error", {}, res);
+      return response(200, "R001", "User create successful", "success", {}, res);
+
     })
   }
 
-  static signIn(req, res){
-
-    User.findOne({ email: req.body.email, password: req.body.password }, (err, user) => {
-      if(err) {
-          res.status(500).json({
-              error: 'Server error'
-          });
-      }
-      if(!user) {
-          res.status(400).json({
-              message: 'User not found'
-          });
-      }
-      let token = services.createToken(user, user.typeAccess)
-      res.status(200).send({
-        message: 'Te has logueado correctamente',
-        token: token
-      })
-    });
-
+  /**
+	 * Funcion que permite ingresar sesion
+	 * @param {object} req
+	 * @param {object} res
+	*/
+  static async signIn(req, res){
+    return Crud.signIn(User, req.body, 0, res)
   }
 }

@@ -4,32 +4,36 @@ import express from 'express';
 import Product from '../controllers/Product'
 import User from '../controllers/User';
 import Client from '../controllers/Client';
-import auth from '../middlewares/auth';
+import Bill from '../controllers/Bill';
+import Auth from '../middlewares/Auth';
 const api = express.Router()
 
 //products
 api.get('/product', Product.getAll)
 api.get('/product/:productId', Product.getOne)
-api.post('/product', auth,Product.save)
-api.put('/product/:productId', auth,Product.update )
-api.delete('/product/:productId', auth,Product.delete)
+api.post('/product', Auth.staff,Product.save)
+api.put('/product/:productId', Auth.staff,Product.update )
+api.delete('/product/:productId', Auth.staff,Product.delete)
 
 //staff
-api.post('/user/register', User.register)
+api.post('/user/register', Auth.admin, User.register)
 api.post('/user/signin', User.signIn)
 
 //clients
 api.post('/client/signup', Client.register)
 api.post('/client/signin', Client.signIn)
-
-
+api.get('/client/statistics', Auth.admin, Client.statistics)
 
 //bills
+api.get('/bill', Auth.client, Bill.getAll)
+api.get('/bill/:billId', Auth.client, Bill.getOne)
+api.post('/bill', Auth.client ,Bill.save)
+api.put('/bill/:billId', Auth.client, Bill.update)
+api.put('/bill/state/:billId', Auth.staff, Bill.state)
+api.put('/bill/calificate/:billId', Auth.client, Auth,Bill.update)
 
 
-
-
-api.get('/private', auth, function (req, res) {
+api.get('/private', Auth, function (req, res) {
   res.status(200).send({message: 'Tienes acceso'})
 })
 
