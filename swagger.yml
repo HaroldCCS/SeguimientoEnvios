@@ -1,0 +1,318 @@
+openapi: 3.0.0
+info:
+  title: TestEnMedio.1.0
+  version: 1.0.0
+  description: endpoints
+  contact:
+    name: Arquitectura
+servers:
+  - url: 'http://localhost:3000/api'
+    description: DEV
+paths:
+  /user/registry:
+    post:
+      summary: Register user
+      operationId: post-identification-validate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user.validate.apiResponse'
+      description: Validate Identification existence
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nit:
+                  type: integer
+                email:
+                  type: string
+                name:
+                  type: string
+                phone:
+                  type: string
+                typeAccess:
+                  type: integer
+                password:
+                  type: string
+        description: ''
+      tags:
+        - User endpoints
+    parameters: []
+  /user/signin:
+    post:
+      summary: signin user
+      operationId: signin-identification-validate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user.validate.apiResponse'
+      description: Validate Identification existence
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+        description: ''
+      tags:
+        - User endpoints
+    parameters: []
+  /client/signup:
+    post:
+      summary: Register client
+      operationId: post-validate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user.validate.apiResponse'
+      description: Validate Identification existence
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nit:
+                  type: integer
+                email:
+                  type: string
+                name:
+                  type: string
+                phone:
+                  type: string
+                typeAccess:
+                  type: integer
+                password:
+                  type: string
+        description: ''
+      tags:
+        - Client endpoints
+    parameters: []
+  /client/signin:
+    post:
+      summary: signin client
+      operationId: signin-validate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user.validate.apiResponse'
+      description: Validate Identification existence
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+        description: ''
+      tags:
+        - Client endpoints
+    parameters: []
+  '/client':
+    get:
+      summary: Get all clients
+      tags:
+        - Client endpoints
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                example-1:
+                  value:
+                    code: string
+                    message: string
+                    type: string
+                    data: object
+      operationId: get-clients-userId
+      description: Gets Client Information
+  '/product':
+    get:
+      summary: Get all products
+      tags:
+        - Product endpoints
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+                  type:
+                    type: string
+                  data:
+                    type: object
+      operationId: get-products
+      description: Gets Products Information
+
+  '/product/{productId}':
+    parameters:
+      - schema:
+          type: string
+        name: productId
+        in: path
+        required: true
+    get:
+      summary: Get one product
+      tags:
+        - Product endpoints
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+                  type:
+                    type: string
+                  data:
+                    type: object
+      operationId: get-users-userId
+      description: Gets User Information
+  
+  /product/create:
+    post:
+      summary: Create product
+      operationId: post-Create
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user.validate.apiResponse'
+      description: Validate Identification existence
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                brand:
+                  type: string
+                price:
+                  type: integer
+                description:
+                  type: string
+                typeAccess:
+                  type: integer
+                stock:
+                  type: string
+        description: ''
+      tags:
+        - Product endpoints
+  /product/delete/{productId}:
+      parameters:
+      - in: path
+        name: productId
+        schema:
+          type: string
+          required: true
+    delete:
+      summary: Update product
+      operationId: put-product
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user.validate.apiResponse'
+      description: Validate Identification existence
+      tags:
+        - Product endpoints
+  /product/update/{productId}:
+    parameters:
+      - in: path
+        name: productId
+        schema:
+          type: string
+          required: true
+    put:
+      summary: Update product
+      operationId: put-product
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user.validate.apiResponse'
+      description: Validate Identification existence
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                brand:
+                  type: string
+                price:
+                  type: integer
+                description:
+                  type: string
+                typeAccess:
+                  type: integer
+                stock:
+                  type: string
+                sell:
+                  type: integer
+                state:
+                  type: integer
+        description: ''
+      tags:
+        - Product endpoints
+    parameters: []
+components:
+  schemas:
+    user.validate.apiResponse:
+      title: Validate user existence response
+      type: object
+      description: Validate user existence response
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        type:
+          type: string
+        data:
+          type: object
+
+  securitySchemes: {}

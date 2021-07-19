@@ -2,6 +2,7 @@
 
 //modelo
 import Product from '../models/product'
+import Bill from '../models/bill'
 import response from '../util/response'
 import Crud from '../util/Crud'
 import { processValidationBodyJsonSchema } from '../validate-schema';
@@ -85,6 +86,60 @@ export default class ProductController {
         return response(200, "R001", "product removed", "success", {}, res);
       });
     });
+  }
+
+  /**
+	 * Funcion que permite ingresar sesion
+	 * @param {object} req
+	 * @param {object} res
+	*/
+  static async statistics(req, res){
+
+    let dataReturn = []
+
+    try {
+      let dataBill = await Promise.resolve(Crud.findEspecific(Bill,{}, {"product":1, "state":1}));
+
+      let filterStateBill = dataBill.filter(a => a.state.length == 4 );
+
+      let productData = await Promise.resolve( Crud.findAll(Product));
+
+      for (let i of productData) {
+        let arr = []
+        for (const x of filterStateBill) {
+          for (const y of x.product) {
+            if (y.id == i._id && y.calificate)arr.push(y.calificate)
+          }
+        }
+        let valor = 0;
+        let cantidadCalifications = arr.length;
+        if(cantidadCalifications != 0){
+          for (const t of arr) {
+            valor += t
+          }
+          valor = valor / cantidadCalifications
+        }
+
+        dataReturn.push({
+          id: i._id,
+          name: i.name,
+          brand: i.brand,
+          stock: i.stock,
+          sell:  i.sell,
+          price: i.price,
+          generalCalification: valor,
+          amountCalification: cantidadCalifications
+        })
+      }
+      dataReturn = dataReturn.sort((a, b) => a.generalCalification - b.generalCalification ).reverse()
+
+      return response(200, "R001", "Data for statistics", "success", dataReturn, res);
+
+    } catch (error) {
+      if(error == 400) return response(400, "R003", "No statistics", "success", {}, res);
+			console.log(error)
+      return response(500, "R002", "Internal Service Error", "error", {}, res);
+    }
   }
 
   static changeStock(productId, sell, stock) {

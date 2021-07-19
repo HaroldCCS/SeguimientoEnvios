@@ -10,7 +10,7 @@ const api = express.Router()
 
 //products
 api.get('/product', Product.getAll)
-api.get('/product/statistics', Auth.admin, Product.getAll)
+api.get('/product/statistics', Auth.admin, Product.statistics)
 api.get('/product/:productId', Product.getOne)
 api.post('/product/create', Auth.staff,Product.save)
 api.put('/product/update/:productId', Auth.staff,Product.update )
