@@ -36,8 +36,8 @@ api.put('/bill/state/:billId', Auth.staff, Bill.state)
 api.put('/bill/calificate/:billId', Auth.client, Bill.calificate)
 
 
-api.get('/private', Auth, function (req, res) {
-  res.status(200).send({message: 'Tienes acceso'})
+api.get('/private', function (req, res) {
+  res.status(200).send({message: 'Servicio funcionando'})
 })
 
 module.exports = api
